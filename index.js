@@ -27,7 +27,7 @@ app.post('/webhook', function(req, res) {
     for (i = 0; i < events.length; i++) {
         var event = events[i];
         if (event.message && event.message.text) {
-            if (!kittenMessage(event.sender.id, event.message.text)) {
+            if (!kittenMessage(event.sender.id, event.message.text && !helloMessage(event.sender.id, event.message.text))) {
                 sendMessage(event.sender.id, { text: "Echo: " + event.message.text });
             }
         } else if (event.postback) {
@@ -94,6 +94,23 @@ function kittenMessage(recipientId, text) {
 
             return true;
         }
+    }
+
+    return false;
+
+};
+
+// send rich message with kitten
+function helloMessage(recipientId, text) {
+
+    text = text || "";
+    var values = text.split(' ');
+
+    if (values.length === 2 && values[0] === 'Hello') {
+        message = "Hello Badr, How may I help you ?";
+
+        sendMessage(recipientId, message);
+        return true;
     }
 
     return false;
