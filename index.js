@@ -27,10 +27,12 @@ app.post('/webhook', function(req, res) {
     for (i = 0; i < events.length; i++) {
         var event = events[i];
         if (event.message && event.message.text) {
-            if (!kittenMessage(event.sender.id, event.message.text)) {
-                if (!helloMessage(event.sender.id, event.message.text)) {
-                    sendMessage(event.sender.id, { text: "Echo: " + event.message.text });
-                }
+            var values = event.message.text.split(' ');
+
+            if (values[0] === 'Hello') {
+                sendMessage(event.sender.id, "Hello, How may I help you ?")
+            } else if (!kittenMessage(event.sender.id, event.message.text)) {
+                sendMessage(event.sender.id, { text: "Echo: " + event.message.text });
             }
         } else if (event.postback) {
             console.log("Postback received: " + JSON.stringify(event.postback));
@@ -96,23 +98,6 @@ function kittenMessage(recipientId, text) {
 
             return true;
         }
-    }
-
-    return false;
-
-};
-
-// send custom hello message.
-function helloMessage(recipientId, text) {
-
-    text = text || "";
-    var values = text.split(' ');
-
-    if (values.length === 2 && values[0] === 'Hello') {
-        message = "Hello, How may I help you ?";
-
-        sendMessage(recipientId, message);
-        return true;
     }
 
     return false;
