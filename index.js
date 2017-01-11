@@ -30,7 +30,7 @@ app.post('/webhook', function(req, res) {
             var values = event.message.text.split(' ');
 
             if (values[0] === 'Hello') {
-                sendMessage(event.sender.id, { text: "Hello " + event.sender.first_name + ",How may I help you ?" })
+                sendMessage(event.sender.id, { text: "Hello " + event.sender.id + ",How may I help you ?" })
             } else if (!kittenMessage(event.sender.id, event.message.text)) {
                 sendMessage(event.sender.id, { text: "Echo: " + event.message.text });
             }
