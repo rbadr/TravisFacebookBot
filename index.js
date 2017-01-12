@@ -28,9 +28,11 @@ app.post('/webhook', function(req, res) {
         var event = events[i];
         if (event.message && event.message.text) {
             var values = event.message.text.split(' ');
+            userInfoRequest(event.sender.id)
+                .then((userInfo) => { facebook_user_name: userInfo.first_name });
 
             if (values[0] === 'Hello') {
-                sendMessage(event.sender.id, { text: "Hello " + event.sender.id + ",How may I help you ?" })
+                sendMessage(event.sender.id, { text: "Hello " + facebook_user_name + ",How may I help you ?" })
             } else if (!kittenMessage(event.sender.id, event.message.text)) {
                 sendMessage(event.sender.id, { text: "Echo: " + event.message.text });
             }
@@ -102,4 +104,22 @@ function kittenMessage(recipientId, text) {
 
     return false;
 
+};
+
+function userInfoRequest(userId) {
+    return new Promise((resolve, reject) => {
+        request({
+                method: 'GET',
+                uri: "https://graph.facebook.com/v2.8/" + userId + "?fields=first_name,last_name&access_token=" + process.env.PAGE_ACCESS_TOKEN
+            },
+            function(error, response) {
+                if (error) {
+                    console.error('Error while userInfoRequest: ', error);
+                    reject(error);
+                } else {
+                    console.log('userInfoRequest result: ', response.body);
+                    resolve(response.body);
+                }
+            });
+    });
 };
