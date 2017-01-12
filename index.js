@@ -88,12 +88,12 @@ app.post('/webhook', function(req, res) {
                 sendMessage(event.sender.id, { text: "The time the build finished : 2014-04-08T19:52:56Z" });
             } else if (values.indexOf("duration") >= 0) {
                 sendMessage(event.sender.id, { text: "The build duration was : 2648" });
-            } else if (values.indexOf("pull") >= 0 && values.indexOf("request") >= 0) {
-                sendMessage(event.sender.id, { text: "True" });
             } else if (values.indexOf("pull") >= 0 && values.indexOf("request") >= 0 && values.indexOf("title") >= 0) {
                 sendMessage(event.sender.id, { text: "Example PR" });
             } else if (values.indexOf("pull") >= 0 && values.indexOf("request") >= 0 && values.indexOf("number") >= 0) {
                 sendMessage(event.sender.id, { text: "The PR number is : 1912" });
+            } else if (values.indexOf("pull") >= 0 && values.indexOf("request") >= 0) {
+                sendMessage(event.sender.id, { text: "True" });
             } else if (values.indexOf("Thanks") >= 0) {
                 sendMessage(event.sender.id, { text: "You're welcome ;)" });
             } else {
