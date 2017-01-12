@@ -3,6 +3,8 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var app = express();
 
+const facebook_user_name;
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.listen((process.env.PORT || 3000));
@@ -29,7 +31,10 @@ app.post('/webhook', function(req, res) {
         if (event.message && event.message.text) {
             var values = event.message.text.split(' ');
             userInfoRequest(event.sender.id)
-                .then((userInfo) => { facebook_user_name: userInfo.first_name });
+                .then((userInfo) => {
+
+                    facebook_user_name: userInfo.first_name
+                });
 
             if (values[0] === 'Hello') {
                 sendMessage(event.sender.id, { text: "Hello " + facebook_user_name + ",How may I help you ?" })
