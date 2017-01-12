@@ -37,7 +37,7 @@ app.post('/webhook', function(req, res) {
                 });
 
             if (values[0] === 'Hello') {
-                sendMessage(event.sender.id, { text: "Hello " + userInfo.first_name + ",How may I help you ?" })
+                sendMessage(event.sender.id, { text: "Hello " + facebook_user_name + ",How may I help you ?" })
             } else if (!kittenMessage(event.sender.id, event.message.text)) {
                 sendMessage(event.sender.id, { text: "Echo: " + event.message.text });
             }
