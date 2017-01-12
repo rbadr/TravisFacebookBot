@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var request = require('request');
 var app = express();
 
-const facebook_user_name;
+var facebook_user_name = "";
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
