@@ -70,9 +70,9 @@ app.post('/webhook', function(req, res) {
             var receivedMessage = event.message.text.toLowerCase();
             var values = receivedMessage.split(' ');
             if (values.indexOf("hello") >= 0) {
-                let userName = userInfoRequest(event.sender.id);
-                let userNameValues = userName.split(' ');
-                let first_name = userNameValues[userNameValues.indexOf("first_name") + 4];
+                var userName = userInfoRequest(event.sender.id);
+                var userNameValues = userName.split(' ');
+                var first_name = userNameValues[userNameValues.indexOf("first_name") + 4];
                 sendMessage(event.sender.id, { text: "Hello " + first_name + ", How may I help you ?" });
             } else if (values.indexOf("build") >= 0 && values.indexOf("project") >= 0 && values.indexOf("informations") >= 0) {
                 sendMessage(event.sender.id, { text: "Yes for sure, I'll just need your repo's name as followed repoOwner : repoName" });
