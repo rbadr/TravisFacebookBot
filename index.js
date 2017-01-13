@@ -67,8 +67,9 @@ app.post('/webhook', function(req, res) {
     for (i = 0; i < events.length; i++) {
         var event = events[i];
         if (event.message && event.message.text) {
-            var values = event.message.text.split(' ');
-            if (values.indexOf("Hello") >= 0) {
+            var receivedMessage = event.message.text.toLowerCase();
+            var values = receivedMessage.split(' ');
+            if (values.indexOf("hello") >= 0) {
                 sendMessage(event.sender.id, { text: "Hello, How may I help you ?" });
             } else if (values.indexOf("build") >= 0 && values.indexOf("project") >= 0 && values.indexOf("informations") >= 0) {
                 sendMessage(event.sender.id, { text: "Yes for sure, I'll just need your repo's name as followed repoOwner : repoName" });
@@ -107,7 +108,7 @@ app.post('/webhook', function(req, res) {
             } else if (values.indexOf("pull") >= 0 && values.indexOf("request") >= 0) {
                 var isPullRequest = "True";
                 sendMessage(event.sender.id, { text: isPullRequest });
-            } else if (values.indexOf("Thanks") >= 0) {
+            } else if (values.indexOf("thanks") >= 0) {
                 sendMessage(event.sender.id, { text: "You're welcome ;)" });
             } else {
                 sendMessage(event.sender.id, { text: "Sorry I didn't undersant what you meant :( Try me again !" });
