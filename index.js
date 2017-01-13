@@ -42,19 +42,21 @@ function sendMessage(recipientId, message) {
 
 // Get the user first name and last name using his id 
 function userInfoRequest(userId) {
-    request({
-            method: 'GET',
-            uri: "https://graph.facebook.com/v2.8/" + userId + "?fields=first_name,last_name&access_token=" + process.env.PAGE_ACCESS_TOKEN
-        },
-        function(error, response) {
-            if (error) {
-                console.error('Error while userInfoRequest: ', error);
-            } else {
-                console.log('userInfoRequest result: ', response.body);
-                var userInfoResult = response.body;
-            }
-        });
-    return userInfoResult;
+    return new Promise((resolve, reject) => {
+        request({
+                method: 'GET',
+                uri: "https://graph.facebook.com/v2.8/" + userId + "?fields=first_name,last_name&access_token=" + process.env.PAGE_ACCESS_TOKEN
+            },
+            function(error, response) {
+                if (error) {
+                    console.error('Error while userInfoRequest: ', error);
+                    reject(error);
+                } else {
+                    console.log('userInfoRequest result: ', response.body);
+                    resolve(response.body);
+                }
+            });
+    });
 };
 
 
@@ -68,10 +70,7 @@ app.post('/webhook', function(req, res) {
             var receivedMessage = event.message.text.toLowerCase();
             var values = receivedMessage.split(' ');
             if (values.indexOf("hello") >= 0) {
-                var userInfo = userInfoRequest(event.sender.id);
-                var userInfoRes = userInfo.split(' ');
-                var firstName = userInfo[userInfo.indexOf("first_name") + 4];
-                sendMessage(event.sender.id, { text: "Hello " + firstName + ", How may I help you ?" });
+                sendMessage(event.sender.id, { text: "Hello, How may I help you ?" });
             } else if (values.indexOf("build") >= 0 && values.indexOf("project") >= 0 && values.indexOf("informations") >= 0) {
                 sendMessage(event.sender.id, { text: "Yes for sure, I'll just need your repo's name as followed repoOwner : repoName" });
             } else if (values.indexOf(":") >= 0) {
