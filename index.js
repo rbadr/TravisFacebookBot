@@ -54,7 +54,6 @@ function userInfoRequest(userId) {
                 } else {
                     console.log('userInfoRequest result: ', response.body);
                     resolve(response.body);
-                    return response.body;
                 }
             });
     });
@@ -71,8 +70,7 @@ app.post('/webhook', function(req, res) {
             var receivedMessage = event.message.text.toLowerCase();
             var values = receivedMessage.split(' ');
             if (values.indexOf("hello") >= 0) {
-                var userName = userInfoRequest(event.sender.id);
-                sendMessage(event.sender.id, { text: "Hello " + userName.first_name + ", How may I help you ?" });
+                sendMessage(event.sender.id, { text: "Hello, How may I help you ?" });
             } else if (values.indexOf("build") >= 0 && values.indexOf("project") >= 0 && values.indexOf("informations") >= 0) {
                 sendMessage(event.sender.id, { text: "Yes for sure, I'll just need your repo's name as followed repoOwner : repoName" });
             } else if (values.indexOf(":") >= 0) {
