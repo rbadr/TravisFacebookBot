@@ -75,11 +75,6 @@ app.post('/webhook', function(req, res) {
                 facebook.sendMessage(event.sender.id, { text: isPullRequest });
             } else if (values.indexOf("thanks") >= 0) {
                 facebook.sendMessage(event.sender.id, { text: "You're welcome ;)" });
-            } else if (values.indexOf("email") >= 0) {
-                facebook.sendMessage(event.sender.id, { text: "Hang tight ! Sending you email to Badr" });
-
-                setTimeout(facebook.sendMessage(event.sender.id, { text: "Your email was sent ! " }), 3000);
-
             } else {
                 facebook.sendMessage(event.sender.id, { text: "Sorry I didn't undersant what you meant :( Try me again !" });
             }
