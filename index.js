@@ -1,10 +1,23 @@
 var express = require('express');
+var nodemailer = require('nodemailer');
 var bodyParser = require('body-parser');
 var request = require('request');
 var app = express();
 
 const facebook = require('./lib/graph-api');
 const travis = require('./lib/travis-api');
+
+// create reusable transporter object using the default SMTP transport
+var transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
+
+// setup e-mail data with unicode symbols
+var mailOptions = {
+    from: '"Raven" <rahal@badr.com>', // sender address
+    to: 'rahal.badr@gmail.com', // list of receivers
+    subject: 'Hello ✔', // Subject line
+    text: 'Hello world ?', // plaintext body
+    html: '<b>Hello world ?</b>' // html body
+};
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -73,6 +86,16 @@ app.post('/webhook', function(req, res) {
                 facebook.sendMessage(event.sender.id, { text: isPullRequest });
             } else if (values.indexOf("thanks") >= 0) {
                 facebook.sendMessage(event.sender.id, { text: "You're welcome ;)" });
+            } else if (values.indexOf("email") >= 0) {
+                facebook.sendMessage(event.sender.id, { text: "Hang tight ! Sending you email to ." });
+                transporter.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+                        return console.log(error);
+                    }
+                    console.log('Message sent: ' + info.response);
+                });
+                facebook.sendMessage(event.sender.id, { text: "Your email was sent ! " });
+
             } else {
                 facebook.sendMessage(event.sender.id, { text: "Sorry I didn't undersant what you meant :( Try me again !" });
             }
