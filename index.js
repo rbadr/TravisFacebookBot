@@ -8,7 +8,7 @@ const facebook = require('./lib/graph-api');
 const travis = require('./lib/travis-api');
 
 // create reusable transporter object using the default SMTP transport
-var transporter = nodemailer.createTransport('smtps://' + process.env.USER + '%40gmail.com:' + process.env.PASS '@smtp.gmail.com');
+var transporter = nodemailer.createTransport(process.env.SMTP);
 
 // setup e-mail data with unicode symbols
 var mailOptions = {
