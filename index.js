@@ -6,24 +6,7 @@ var app = express();
 
 const facebook = require('./lib/graph-api');
 const travis = require('./lib/travis-api');
-
-// create reusable transporter object using the default SMTP transport
-var transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: process.env.USER,
-        pass: process.env.PASS
-    }
-});
-
-// setup e-mail data with unicode symbols
-var mailOptions = {
-    from: '"Travis Notifier" <noreplycinotifier@gmail.com>', // sender address
-    to: 'rahal.badr@gmail.com', // list of receivers
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello world ?', // plaintext body
-    html: '<b>Hello world ?</b>' // html body
-};
+const helper = require('./lib/helper');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -93,14 +76,9 @@ app.post('/webhook', function(req, res) {
             } else if (values.indexOf("thanks") >= 0) {
                 facebook.sendMessage(event.sender.id, { text: "You're welcome ;)" });
             } else if (values.indexOf("email") >= 0) {
-                facebook.sendMessage(event.sender.id, { text: "Hang tight ! Sending you email to ." });
-                transporter.sendMail(mailOptions, function(error, info) {
-                    if (error) {
-                        return console.log(error);
-                    }
-                    console.log('Message sent: ' + info.response);
-                });
-                facebook.sendMessage(event.sender.id, { text: "Your email was sent ! " });
+                facebook.sendMessage(event.sender.id, { text: "Hang tight ! Sending you email to Badr" });
+                helper.sendEmailTo('rahal.badr@gmail.com', 'test', 'test');
+                setTimeout(facebook.sendMessage(event.sender.id, { text: "Your email was sent ! " }), 3000);
 
             } else {
                 facebook.sendMessage(event.sender.id, { text: "Sorry I didn't undersant what you meant :( Try me again !" });
