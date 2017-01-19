@@ -77,7 +77,7 @@ app.post('/webhook', function(req, res) {
                 facebook.sendMessage(event.sender.id, { text: "You're welcome ;)" });
             } else if (values.indexOf("email") >= 0) {
                 facebook.sendMessage(event.sender.id, { text: "Hang tight ! Sending you email to Badr" });
-                helper.sendEmailTo('rahal.badr@gmail.com', 'test', 'test');
+
                 setTimeout(facebook.sendMessage(event.sender.id, { text: "Your email was sent ! " }), 3000);
 
             } else {
