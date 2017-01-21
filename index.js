@@ -80,10 +80,10 @@ app.post('/webhook', function(req, res) {
                 var senderEmail = 'rahal.badr@gmail.com';
                 var subject = 'CI Notification From Rahal Badr';
                 var mapObj = {
-                    he: "you",
-                    his: "your"
+                    he: " you ",
+                    his: " your "
                 };
-                var content = receivedMessage.replace(/he|his/gi, function(matched) {
+                var content = receivedMessage.replace(/ he | his /gi, function(matched) {
                     return mapObj[matched];
                 });
                 var emailContent = content.split(/ tell him (that){0,1}/);
