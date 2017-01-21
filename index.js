@@ -82,7 +82,7 @@ app.post('/webhook', function(req, res) {
                 var content = receivedMessage.replace('he', 'you').replace('his', 'your');
                 var emailContent = content.split(/ tell him (that){0,1}/);
                 var emailText = emailContent.join(' ');
-                helper.sendEmailTo(senderEmail, subject, emailContent);
+                helper.sendEmailTo(senderEmail, subject, emailText);
                 setTimeout(function() { facebook.sendMessage(event.sender.id, { text: "Your email was sent ! " }); }, 5000);
             } else {
                 facebook.sendMessage(event.sender.id, { text: "Sorry I didn't undersant what you meant :( Try me again !" });
