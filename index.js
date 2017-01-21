@@ -79,7 +79,13 @@ app.post('/webhook', function(req, res) {
                 facebook.sendMessage(event.sender.id, { text: "Hang tight ! Sending you email to Badr" });
                 var senderEmail = 'rahal.badr@gmail.com';
                 var subject = 'CI Notification From Rahal Badr';
-                var content = receivedMessage.replace(' he ', ' you ').replace(' his ', ' your ');
+                var mapObj = {
+                    he: "you",
+                    his: "your"
+                };
+                var content = receivedMessage.replace(/he|his/gi, function(matched) {
+                    return mapObj[matched];
+                });
                 var emailContent = content.split(/ tell him (that){0,1}/);
                 var emailText = emailContent[emailContent.length - 1].toString();
                 helper.sendEmailTo(senderEmail, subject, emailText);
