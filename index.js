@@ -26,6 +26,10 @@ app.get('/webhook', function(req, res) {
     }
 });
 
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 // handler receiving messages
 app.post('/webhook', function(req, res) {
     var events = req.body.entry[0].messaging;
@@ -87,7 +91,7 @@ app.post('/webhook', function(req, res) {
                     return mapObj[matched.replace(/\s/g, '')];
                 });
                 var emailContent = content.split(/ tell him (that){0,1}/);
-                var emailText = emailContent[emailContent.length - 1].toString();
+                var emailText = emailContent[emailContent.length - 1].toString().capitalize();
                 helper.sendEmailTo(senderEmail, subject, emailText);
                 setTimeout(function() { facebook.sendMessage(event.sender.id, { text: "Your email was sent ! " }); }, 5000);
             } else {
