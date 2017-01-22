@@ -83,7 +83,7 @@ app.post('/webhook', function(req, res) {
                     he: " you",
                     his: " your"
                 };
-                var content = receivedMessage.replace(/\she|\shis/gi, function(matched) {
+                var content = receivedMessage.replace(/\she\s|\shis\s/gi, function(matched) {
                     return mapObj[matched.replace(/\s/g, '')];
                 });
                 var emailContent = content.split(/ tell him (that){0,1}/);
