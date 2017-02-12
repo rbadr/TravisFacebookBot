@@ -88,7 +88,7 @@ travis.repos(req.params.name, req.params.projet).builds.get(function (err, res) 
 app.get('/commits/:name/:projet',function(req,resultat){
 travis.repos(req.params.name, req.params.projet).builds.get(function (err, res) {
      var obj = JSON.parse(JSON.stringify(res));
-     var retour="------- Liste des Builds du Projet "+req.params.projet+ " ------------\n";
+     var retour="------- Liste des Commits du Projet "+req.params.projet+ " ------------\n";
      obj["commits"].forEach(function(element){
         retour=retour+affichageCommit(element)
      });
@@ -156,7 +156,8 @@ function affichageEtatUnBuilds(build,commit){
 }
 
 function affichageCommit(commit){
-    obj="Id du Commit : " +ifNull(commit["id"])+"\n"+
+    obj="----------------------------------------\n"+
+      "Id du Commit : " +ifNull(commit["id"])+"\n"+
       "Branch :"+ifNull(commit["branch"])+"\n"+
       "Message :"+ifNull(commit["message"])+"\n"+
       "Auteur du Commit :"+ifNull(commit["committer_name"])+"\n"+
