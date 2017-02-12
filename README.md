@@ -1,4 +1,4 @@
-# CI Notifier [![Build Status](https://travis-ci.com/rbadr/ContinuousIntegrationNotifier.svg?token=xPpydP9QfcPypp7wkHkg&branch=master)](https://travis-ci.com/rbadr/ContinuousIntegrationNotifier)(https://travis-ci.com/rbadr/TravisFacebookBot)
+# CI Notifier [![Build Status](https://travis-ci.com/rbadr/ContinuousIntegrationNotifier.svg?token=xPpydP9QfcPypp7wkHkg&branch=master)](https://travis-ci.com/rbadr/ContinuousIntegrationNotifier)
 
 A project in software automation, by Rahal Badr & Jihad El Fakaway. IAGL, Lille University, France.
 
