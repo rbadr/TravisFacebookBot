@@ -35,7 +35,7 @@ app.post('/webhook', function(req, res) {
         if (event.message && event.message.text) {
             var receivedMessage = event.message.text.toLowerCase();
             var values = receivedMessage.split(' ');
-            ai.processMessage(values, event.sender.id);
+            ai.processIncoming(values, event.sender.id);
         } else if (event.postback) {
             console.log("Postback received: " + JSON.stringify(event.postback));
         }
